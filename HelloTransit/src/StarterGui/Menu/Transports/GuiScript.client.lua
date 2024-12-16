@@ -8,7 +8,11 @@ WhiteScreen.Tutorial.Activated:Connect(function()
 	Tutorial.Visible = true
 end)
 
-
+script.Parent.Back.Activated:Connect(function()
+	script.Parent.Visible = false
+	
+	WhiteScreen.Visible = true
+end)
 
 -- Script for Transports
 

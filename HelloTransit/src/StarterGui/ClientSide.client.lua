@@ -29,9 +29,15 @@ Menu.SelectionFrame.Search.Activated:Connect(function()
 		
 		Menu.Parent.Transports.Visible = true
 		
-		
 		-- Send the button activation to the server
 		game.ReplicatedStorage.CloneEvent:FireServer(Location.Value, Destination.Value)
+		
+		-- Teleport local player to the start location
+		local PlayerSpawn = game.Workspace.PlayerSpawns:FindFirstChild(Location.Value)
+
+		if PlayerSpawn then
+			game.Players.LocalPlayer.Character:MoveTo(PlayerSpawn.Position)
+		end
 	end
 end)
 

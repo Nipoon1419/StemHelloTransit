@@ -31,6 +31,8 @@ function Cloning(dummy, spawn, transport, searchvalue)
 	-- Set the timer
 	searchvalue.Value = true
 	transport.Time.Value = 0
+	transport.Fare.Value = 0
+	transport.Distance.Value = 0
 	
 	-- Debounce
 	local debounce = {}
@@ -66,12 +68,20 @@ function Cloning(dummy, spawn, transport, searchvalue)
 			transport.Distance.Value = transport.Time.Value * 50
 			print(transport.Time.Value)
 			wait(1)
+			
+			-- Extra time taken if walk
+			while transport.Name == "Walk" and searchvalue.Value do
+				transport.Time.Value = transport.Time.Value + 2
+				transport.Distance.Value = transport.Time.Value * 25
+				wait(1)
+			end
 		end
 	end)()
 end
 
 -- Declaring cloning parameters
 function SetSpawn(locationName)
+	
 	
 	-- Set variable for part with the same chosen name
 	local SpawnLocation = game.Workspace.LandmarkLocations:FindFirstChild(locationName)
@@ -105,12 +115,14 @@ function SetDestination(destinationName)
 end
 
 -- Clone the dummies after remote event is triggered from client
-game.ReplicatedStorage.CloneEvent.OnServerEvent:Connect(function(_, locationName, destinationName)
+game.ReplicatedStorage.CloneEvent.OnServerEvent:Connect(function(player, locationName, destinationName)
 	
-	wait(10)
+	
+	wait(3) -- Time before dummies start running
 	SetSpawn(locationName)
 	
 	SetDestination(destinationName)
+
 end)
 
 
